@@ -87,10 +87,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "DG Global Exim is a trusted exporter and supplier of premium-quality agricultural and food products from India. Jaggery, turmeric, moringa, onion powder and more." },
       { name: "author", content: "DG Global Exim" },
       { property: "og:title", content: "DG Global Exim — Premium Agricultural Exports from India" },
-      { property: "og:description", content: "Trusted exporter and supplier of premium-quality agricultural and food products from India." },
+      { property: "og:description", content: "DG Global Exim is a trusted exporter and supplier of premium-quality agricultural and food products from India. Jaggery, turmeric, moringa, onion powder and more." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@DGGlobalExim" },
+      { name: "twitter:title", content: "DG Global Exim — Premium Agricultural Exports from India" },
+      { name: "twitter:description", content: "DG Global Exim is a trusted exporter and supplier of premium-quality agricultural and food products from India. Jaggery, turmeric, moringa, onion powder and more." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8b8336b4-b5a7-469c-af66-993a71293c7a/id-preview-3e1c5891--f9535937-8c33-4a5b-8316-d031355a06a6.lovable.app-1780668966782.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8b8336b4-b5a7-469c-af66-993a71293c7a/id-preview-3e1c5891--f9535937-8c33-4a5b-8316-d031355a06a6.lovable.app-1780668966782.png" },
     ],
     links: [
       {
