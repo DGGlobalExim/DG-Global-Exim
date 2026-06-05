@@ -170,7 +170,10 @@ function ContactPage() {
 
               {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
               {sent && !error && (
-                <p className="text-sm text-sage">Your inquiry is ready in your email/WhatsApp app — just hit send.</p>
+                <p className="text-sm text-sage">
+                  Your inquiry was copied to your clipboard and opened in your email/WhatsApp app — just hit send.
+                  If nothing opened, paste it into an email to <span className="font-medium">{RECIPIENT_EMAIL}</span> or WhatsApp <span className="font-medium">+91 8459907676</span>.
+                </p>
               )}
 
               <div className="grid gap-3 sm:grid-cols-2">
