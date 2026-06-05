@@ -37,7 +37,29 @@ function ContactPage() {
   const buildBody = (data: z.infer<typeof inquirySchema>) =>
     `Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`;
 
-  const handleEmail = () => {
+  const openExternal = (href: string, sameTab = false) => {
+    const a = document.createElement("a");
+    a.href = href;
+    if (!sameTab) {
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    }
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const copyMessage = async (data: z.infer<typeof inquirySchema>) => {
+    try {
+      await navigator.clipboard.writeText(
+        `Subject: ${data.subject}\n\n${buildBody(data)}`,
+      );
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const handleEmail = async () => {
     const parsed = inquirySchema.safeParse(form);
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Please check your inputs");
@@ -46,11 +68,12 @@ function ContactPage() {
     setError(null);
     const subject = encodeURIComponent(`[Inquiry] ${parsed.data.subject}`);
     const body = encodeURIComponent(buildBody(parsed.data));
-    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+    await copyMessage(parsed.data);
+    openExternal(`mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`, true);
     setSent(true);
   };
 
-  const handleWhatsApp = () => {
+  const handleWhatsApp = async () => {
     const parsed = inquirySchema.safeParse(form);
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Please check your inputs");
@@ -58,7 +81,8 @@ function ContactPage() {
     }
     setError(null);
     const text = encodeURIComponent(`Inquiry: ${parsed.data.subject}\n\n${buildBody(parsed.data)}`);
-    window.open(`https://wa.me/${RECIPIENT_PHONE}?text=${text}`, "_blank", "noopener,noreferrer");
+    await copyMessage(parsed.data);
+    openExternal(`https://wa.me/${RECIPIENT_PHONE}?text=${text}`);
     setSent(true);
   };
 
@@ -146,7 +170,10 @@ function ContactPage() {
 
               {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
               {sent && !error && (
-                <p className="text-sm text-sage">Your inquiry is ready in your email/WhatsApp app — just hit send.</p>
+                <p className="text-sm text-sage">
+                  Your inquiry was copied to your clipboard and opened in your email/WhatsApp app — just hit send.
+                  If nothing opened, paste it into an email to <span className="font-medium">{RECIPIENT_EMAIL}</span> or WhatsApp <span className="font-medium">+91 8459907676</span>.
+                </p>
               )}
 
               <div className="grid gap-3 sm:grid-cols-2">
